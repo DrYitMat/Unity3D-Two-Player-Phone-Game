@@ -9,8 +9,6 @@ public class Defend : MonoBehaviour {
 
 	public GameObject left,right,top,bottom;
 
-	private GameObject[] leftRight;
-
 	void Start() {
 		Cooldown = 3.0f;
 		CanDefend = true;
@@ -18,9 +16,6 @@ public class Defend : MonoBehaviour {
 		right.SetActive(false);
 		top.SetActive(false);
 		bottom.SetActive(false);
-		if(left != null && right != null) {
-		//
-		}
 	}
 
 	public IEnumerator DefendCooldown(GameObject shield) {
@@ -31,16 +26,22 @@ public class Defend : MonoBehaviour {
 		shield.SetActive(false);
 	}
 
-	public IEnumerator DefendCooldown(GameObject[] shield) {
+	/// <summary>
+	/// Defends the cooldown.
+	/// </summary>
+	/// <returns>The cooldown.</returns>
+	/// <param name="one">One.</param>
+	/// <param name="two">Two.</param>
+	/// 
+	/// Fix lazy params
+	public IEnumerator DefendCooldown(GameObject one, GameObject two) {
 		CanDefend = false;
-		foreach(GameObject a in shield) {
-			a.SetActive(true);
-		}
+		one.SetActive(true);
+		two.SetActive(true);
 		yield return new WaitForSeconds(Cooldown);
 		CanDefend = true;
-		foreach(GameObject a in shield) {
-			a.SetActive(false);
-		}
+		one.SetActive(false);
+		two.SetActive(false);
 	}
 
 	public void Top() {
@@ -51,7 +52,7 @@ public class Defend : MonoBehaviour {
 	
 	public void Sides() {
 		if(CanDefend) {
-			StartCoroutine(DefendCooldown(leftRight));
+			StartCoroutine(DefendCooldown(left, right));
 		} else Debug.Log("Cannot defend at this time");
 	}
 	

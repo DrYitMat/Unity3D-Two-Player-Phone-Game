@@ -23,12 +23,14 @@ public class Projectile : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D col) {
-		if(col.gameObject.tag == "Shield")
-			Destroy(gameObject);
+	void OnCollisionEnter2D(Collision2D coll) {
+		Debug.Log("Collision Detected");
+		if(coll.gameObject.tag == "Shield")
+			Destroy(this.gameObject);
 
-		if(col.gameObject.tag == "Player") {
-			col.gameObject.SendMessage("TakeDamage");
+		if(coll.gameObject.tag == "Player") {
+			coll.gameObject.SendMessage("TakeDamage");
+			Destroy(this.gameObject);
 		}
 	}
 }
