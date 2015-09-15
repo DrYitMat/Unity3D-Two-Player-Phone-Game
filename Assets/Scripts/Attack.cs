@@ -56,4 +56,8 @@ public class Attack : MonoBehaviour {
 			StartCoroutine(AttackCooldown());
 		} else Debug.Log("Cannot attack at this time");
 	}
+
+	public void Reset() {
+		CanAttack = true;
+	}
 }

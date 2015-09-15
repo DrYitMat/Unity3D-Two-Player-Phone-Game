@@ -6,7 +6,9 @@ public class WinLoseManager : MonoBehaviour {
 
 	public Player playerOne, playerTwo;
 
-	public GameObject playerOneTextUI, playerTwoTextUI, playerOneUI, playerTwoUI, playAgain;
+	public GameObject playerOneTextUI, playerTwoTextUI, playAgain;
+
+	public Countdown countDown;
 
 	// Use this for initialization
 	void Start () {
@@ -40,29 +42,18 @@ public class WinLoseManager : MonoBehaviour {
 		}
 
 		playAgain.SetActive(true);
-		Debug.Log("Msg one");
-		// These aren't being called....
 		playerOneTextUI.SetActive(true);
 		playerTwoTextUI.SetActive(true);
-		playerOneUI.SetActive(false);
-		playerTwoUI.SetActive(false);
-		Debug.Log("msg two");
+		countDown.toggleObjects(false);
 	}
-
-
-
+	
+ 	// Reset the game. 
 	public void Reset(){
-		StartCoroutine(Pause());
-	}
-
-	private IEnumerator Pause() {
-		yield return new WaitForSeconds(2.5f);
 		playerOne.Reset();
 		playerTwo.Reset();
 		playAgain.SetActive(false);
 		playerOneTextUI.SetActive(false);
 		playerTwoTextUI.SetActive(false);
-		playerOneUI.SetActive(true);
-		playerTwoUI.SetActive(true);
+		countDown.Reset();
 	}
 }

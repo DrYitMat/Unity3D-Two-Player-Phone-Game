@@ -61,4 +61,8 @@ public class Defend : MonoBehaviour {
 			StartCoroutine(DefendCooldown(bottom));
 		} else Debug.Log("Cannot defend at this time");
 	}
+
+	public void Reset() {
+		CanDefend = true;
+	}
 }
