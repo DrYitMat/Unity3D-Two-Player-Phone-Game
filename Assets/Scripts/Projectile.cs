@@ -23,11 +23,12 @@ public class Projectile : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnTriggerEnter2D(Collider2D coll) {
 		Debug.Log("Collision Detected");
-		if(coll.gameObject.tag == "Shield")
+		if(coll.gameObject.tag == "Shield") {
 			Destroy(this.gameObject);
-
+			Debug.Log("Shield has deflected this hit!");
+		}
 		if(coll.gameObject.tag == "Player") {
 			coll.gameObject.SendMessage("TakeDamage");
 			Destroy(this.gameObject);
