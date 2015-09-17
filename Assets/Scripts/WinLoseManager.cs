@@ -2,58 +2,75 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the result of the game.
+/// </summary>
+/// 
+/// TODO: Should probably make playAgain find the WinLossManager in code, and add a listener for it being clicked. 
 public class WinLoseManager : MonoBehaviour {
 
-	public Player playerOne, playerTwo;
+	// Players
+	private Player playerOne, playerTwo;
 
-	public GameObject playerOneTextUI, playerTwoTextUI, playAgain;
+	//Player UIs
+	private GameObject playerOneMessageUI, playerTwoMessageUI, playAgain;
 
-	public Countdown countDown;
+	private Countdown countDown;
 
 	// Use this for initialization
 	void Start () {
-		if(playerOne == null || playerTwo == null){
-			Debug.Log("Players are not set!");
-			GameObject[] playerList = GameObject.FindGameObjectsWithTag("Player");
-			int a = 0;
-			Debug.Log("Attempting to find players...");
-			foreach(GameObject b in playerList){
-				Player p = b.GetComponent<Player>();
-				if(a == 0) playerOne = p;
-				else playerTwo = p;
-				Debug.Log("Player one: " + playerOne + " Player Two: " + playerTwo);
-				a++;
-			}
-		}
-
-		playerOneTextUI.SetActive(false);
-		playerTwoTextUI.SetActive(false);
+		setObjects();
 		playAgain.SetActive(false);
 	}
 
+	/// <summary>
+	/// Sets the objects.
+	/// </summary>
+	/// 
+	/// May migrate the win/lose gameobject to be a child of PlayerUI. Will need to change logic in countdown for this to work. 
+	private void setObjects() {
+		playerOne = GameObject.FindGameObjectWithTag("PlayerOne").GetComponent<Player>();
+		playerTwo = GameObject.FindGameObjectWithTag("PlayerTwo").GetComponent<Player>();
+		playerOneMessageUI = GameObject.FindGameObjectWithTag("PlayerOneUI").transform.GetChild(2).gameObject;
+		playerTwoMessageUI = GameObject.FindGameObjectWithTag("PlayerTwoUI").transform.GetChild(2).gameObject;
+		countDown = GameObject.FindGameObjectWithTag("Countdown").GetComponent<Countdown>();
+		playAgain = GameObject.FindGameObjectWithTag("PlayAgain");
+	}
+
+	/// <summary>
+	/// If a player lost, handle it. Argument is the player who lost. 
+	/// </summary>
+	/// <param name="playerLose">Player who lost</param>
 	public void playerLost(Player playerLose){
 		Debug.Log("PlayerLost called.");
 		if(playerOne == playerLose) {
-			playerOneTextUI.GetComponent<Text>().text = "LOSER";
-			playerTwoTextUI.GetComponent<Text>().text = "WINNER";
+			playerOneMessageUI.GetComponent<Text>().text = "LOSER";
+			playerTwoMessageUI.GetComponent<Text>().text = "WINNER";
 		} else if(playerTwo == playerLose){
-			playerOneTextUI.GetComponent<Text>().text = "WINNER";
-			playerTwoTextUI.GetComponent<Text>().text = "LOSER";
+			playerOneMessageUI.GetComponent<Text>().text = "WINNER";
+			playerTwoMessageUI.GetComponent<Text>().text = "LOSER";
 		}
 
 		playAgain.SetActive(true);
-		playerOneTextUI.SetActive(true);
-		playerTwoTextUI.SetActive(true);
-		countDown.toggleObjects(false);
+		countDown.ToggleObjects(false);
+		playerOneMessageUI.SetActive(true);
+		playerTwoMessageUI.SetActive(true);
 	}
 	
- 	// Reset the game. 
+ 	/// <summary>
+ 	/// Resets the game. If the game needs to be reset, it should be done through here. 
+ 	/// </summary>
 	public void Reset(){
 		playerOne.Reset();
 		playerTwo.Reset();
+		playerOneMessageUI.GetComponent<Text>().text = "";
+		playerTwoMessageUI.GetComponent<Text>().text = "";
 		playAgain.SetActive(false);
-		playerOneTextUI.SetActive(false);
-		playerTwoTextUI.SetActive(false);
 		countDown.Reset();
 	}
+
+	void Update() {
+
+	}
+
 }

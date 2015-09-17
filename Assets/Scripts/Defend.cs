@@ -7,11 +7,16 @@ public class Defend : MonoBehaviour {
 
 	private float Cooldown { get; set; }
 
-	public GameObject left,right,top,bottom;
+	private GameObject shieldBase, left,right,top,bottom;
 
 	void Start() {
 		Cooldown = 3.0f;
 		CanDefend = true;
+		shieldBase = transform.GetChild(0).gameObject;
+		top = shieldBase.transform.GetChild(0).gameObject;
+		bottom = shieldBase.transform.GetChild(1).gameObject;
+		left = shieldBase.transform.GetChild(2).gameObject;
+		right = shieldBase.transform.GetChild(3).gameObject;
 		left.SetActive(false);
 		right.SetActive(false);
 		top.SetActive(false);

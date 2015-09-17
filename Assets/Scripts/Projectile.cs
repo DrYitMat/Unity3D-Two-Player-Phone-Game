@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	public GameObject Target { get; set; }
+	public Transform Target { get; set; }
 
 	private float step = 0.0f;
 	public float Speed { get; set; }
@@ -16,9 +16,9 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Target != null) {
-			if(transform.position != Target.transform.position){
+			if(transform.position != Target.position){
 				step = Speed * Time.deltaTime;
-				transform.position = Vector3.MoveTowards(transform.position, Target.transform.position, step);
+				transform.position = Vector3.MoveTowards(transform.position, Target.position, step);
 			}
 		}
 	}
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour {
 			Destroy(this.gameObject);
 			Debug.Log("Shield has deflected this hit!");
 		}
-		if(coll.gameObject.tag == "Player") {
+		if(coll.gameObject.tag == "PlayerOne" || coll.gameObject.tag == "PlayerTwo") {
 			coll.gameObject.SendMessage("TakeDamage");
 			Destroy(this.gameObject);
 		}

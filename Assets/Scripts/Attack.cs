@@ -11,18 +11,31 @@ public class Attack : MonoBehaviour {
 	/// <summary>
 	/// Spawn Locations. 
 	/// </summary>
-	public Transform left,right,top,bottom;
+	private Transform target, spawnBase, top,bottom,left,right;
 
 	/// <summary>
 	/// Projectile prefabs. These need to have the Projectile script attached to them. 
 	/// </summary>
 	public GameObject prefabSide,prefabTop,prefabBottom;
 
-	public GameObject target;
-
 	void Start() {
 		Cooldown = 3.0f;
 		CanAttack = true;
+		setObjects();
+	}
+
+	private void setObjects() {
+		if(gameObject.CompareTag("PlayerOne")) {
+			target = GameObject.FindGameObjectWithTag("PlayerTwo").transform.GetChild(0).transform;
+		} else if(gameObject.CompareTag("PlayerTwo")){
+			target = GameObject.FindGameObjectWithTag("PlayerOne").transform.GetChild(0).transform;
+		} else Debug.Log("Could not set player object. Check your tags.");
+
+		spawnBase = gameObject.transform.GetChild(1);
+		top = spawnBase.GetChild(0);
+		bottom = spawnBase.GetChild(1);
+		left = spawnBase.GetChild(2);
+		right = spawnBase.GetChild(3);
 	}
 	
 	private IEnumerator AttackCooldown() {
