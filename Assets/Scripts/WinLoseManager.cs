@@ -42,7 +42,7 @@ public class WinLoseManager : MonoBehaviour {
 	/// </summary>
 	/// <param name="playerLose">Player who lost</param>
 	public void playerLost(Player playerLose){
-		Debug.Log("PlayerLost called.");
+		Debug.Log(playerLose.gameObject.tag);
 		if(playerOne == playerLose) {
 			playerOneMessageUI.GetComponent<Text>().text = "LOSER";
 			playerTwoMessageUI.GetComponent<Text>().text = "WINNER";

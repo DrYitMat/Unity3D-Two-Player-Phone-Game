@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	private static int BASE_HITPOINTS = 1;
+	private static int BASE_HITPOINTS = 5;
 
 	private int HitPoints { get; set; }
 
