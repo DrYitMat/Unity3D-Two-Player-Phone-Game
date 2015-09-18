@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Defend the ship. Spawn shield that deflects/destroys incoming attacks.
+/// </summary>
+/// 
+/// TODO: Add individual cooldown co-routines. Add global access for cooldown times, so this script can speak with attack. 
 public class Defend : MonoBehaviour {
 
 	private bool CanDefend { get; set; }
@@ -51,18 +56,21 @@ public class Defend : MonoBehaviour {
 
 	public void Top() {
 		if(CanDefend) {
+			Cooldown = 1.5f;
 			StartCoroutine(DefendCooldown(top));
 		} else Debug.Log("Cannot defend at this time");
 	}
 	
 	public void Sides() {
 		if(CanDefend) {
+			Cooldown = 6.0f;
 			StartCoroutine(DefendCooldown(left, right));
 		} else Debug.Log("Cannot defend at this time");
 	}
 	
 	public void Bottom() {
 		if(CanDefend) {
+			Cooldown = 3.0f;
 			StartCoroutine(DefendCooldown(bottom));
 		} else Debug.Log("Cannot defend at this time");
 	}

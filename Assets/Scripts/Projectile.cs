@@ -1,32 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+/// <summary>
+/// Projectile class. It needs a list of targets, it will go to those targets in the order they are in the list.  
+/// </summary>
+/// 
+/// TODO: Push next tranfrom in list to top, so the target can change on the fly, if needed. // I might not need this. Just brainstorming :)
+/// TODO: And comment this sucker out. 
 public class Projectile : MonoBehaviour {
 
-	public Transform Target { get; set; }
-	public Transform FirstTarget { get; set; }
+	public List<Transform> TargetList = new List<Transform>();
+	private Transform currentTarget = null;
 
 	private float step = 0.0f;
 	public float Speed { get; set; }
 
+	public int Damage { get; set; }
+
 	// Use this for initialization
 	void Start () {
 		Speed = 5.0f;
+		StartCoroutine(goToTargets());
 	}
-	
+
+	/// <summary>
+	/// Gos to targets in the targetlist. Basically waypoints. 
+	/// </summary>
+	/// <returns>The to targets.</returns>
+	private IEnumerator goToTargets() {
+		int a = 0;
+		currentTarget = TargetList[a];
+		while(true) {
+			if(transform.position != currentTarget.position){
+				step = Speed * Time.deltaTime;
+				transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
+			} else { a++; currentTarget = TargetList[a]; }
+			yield return null;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
-		if(FirstTarget != null) {
-			if(transform.position != FirstTarget.position){
-				step = Speed * Time.deltaTime;
-				transform.position = Vector3.MoveTowards(transform.position, FirstTarget.position, step);
-			} else FirstTarget = null;
-		} else if(Target != null) {
-			if(transform.position != Target.position){
-				step = Speed * Time.deltaTime;
-				transform.position = Vector3.MoveTowards(transform.position, Target.position, step);
-			} 
-		}
+
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
@@ -35,9 +51,9 @@ public class Projectile : MonoBehaviour {
 			Destroy(this.gameObject);
 			Debug.Log("Shield has deflected this hit!");
 		}
-		if(coll.gameObject.tag == Target.parent.gameObject.tag) {
+		if(coll.gameObject.tag == currentTarget.parent.gameObject.tag) {
 			Debug.Log(coll.gameObject.tag);
-			coll.gameObject.SendMessage("TakeDamage");
+			coll.gameObject.SendMessage("TakeDamage", Damage);
 			Destroy(this.gameObject);
 		}
 	}

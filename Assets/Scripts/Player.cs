@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Player.
+/// </summary>
+/// 
+/// TODO: Comment!
 public class Player : MonoBehaviour {
 
-	private static int BASE_HITPOINTS = 5;
+	private static int BASE_HITPOINTS = 10;
 
 	private int HitPoints { get; set; }
 
