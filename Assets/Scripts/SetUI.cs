@@ -18,7 +18,7 @@ using UnityEngine.UI;
 /// 		Bottom
 /// </summary>
 /// 
-/// TODO: Add more flexibility by counting the children and adding listerns accordingly. 
+/// TODO: Add more flexibility by counting the children and adding listerns accordingly. -- MAYBE
 public class SetUI : MonoBehaviour {
 
 	private Attack playerAttack;
@@ -52,6 +52,7 @@ public class SetUI : MonoBehaviour {
 		attack.GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerAttack.Top();});
 		attack.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerAttack.Sides();});
 		attack.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerAttack.Bottom();});
+
 		defend.GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerDefend.Top();});
 		defend.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerDefend.Sides();});
 		defend.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(() => { playerDefend.Bottom();});

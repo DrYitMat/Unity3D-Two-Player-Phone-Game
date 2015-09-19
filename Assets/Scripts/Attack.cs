@@ -12,8 +12,6 @@ public class Attack : MonoBehaviour {
 	private bool CanAttackSides { get; set; }
 	private bool CanAttackBottom { get; set; }
 
-	private ShipTypes shipType;
-
 	/// <summary>
 	/// Spawn Locations. 
 	/// </summary>
@@ -65,17 +63,6 @@ public class Attack : MonoBehaviour {
 		wBottom = target.GetChild(1);
 		wLeft = target.GetChild(2);
 		wRight = target.GetChild(3);
-	}
-
-	private void setAbilities() {
-		switch(shipType) {
-		case ShipTypes.typeOne:
-			break;
-		case ShipTypes.typeTwo:
-			break;
-		case ShipTypes.typeThree:
-			break;
-		}
 	}
 
 	private IEnumerator AttackCooldownTop() {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class Globals {
 	public static float TOP_COOLDOWN = 1.5f;
@@ -9,15 +10,9 @@ public static class Globals {
 }
 
 public enum ShipTypes {
-	typeOne, typeTwo, typeThree
+	fireShip, electripShip, shadowShip
 }
 
 public enum AbilityType {
-	defense,attack,passive
-}
-
-public struct Ability {
-	private AbilityType abilityType;
-	private string myString;
-	private int myInt;
+	fire,electric,shadow
 }
