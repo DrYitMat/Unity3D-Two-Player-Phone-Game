@@ -5,17 +5,14 @@ using System.Collections;
 /// Attack the enemy ship. 
 /// </summary>
 /// 
-/// TODO: Create cooldown functions for each attack. Create a global accessable cooldown vars, so Defend can access. 
 /// TODO: Comment out new functions 
 public class Attack : MonoBehaviour {
+	
+	private bool CanAttackTop { get; set; }
+	private bool CanAttackSides { get; set; }
+	private bool CanAttackBottom { get; set; }
 
-	private bool CanAttack { get; set; }
-
-	private float Cooldown { get; set; }
-	private static float BASE_COOLDOWN = 3.0f;
-
-	private float WaitTime { get; set; }
-	private static float BASE_WAITTIME = 1.5f;
+	private ShipTypes shipType;
 
 	/// <summary>
 	/// Spawn Locations. 
@@ -31,12 +28,11 @@ public class Attack : MonoBehaviour {
 
 	private GameObject warningPrefab;
 
-	private int direction;
-
 	void Start() {
-		Cooldown = BASE_COOLDOWN;
-		WaitTime = BASE_WAITTIME;
-		CanAttack = true;
+		CanAttackTop = true;
+		CanAttackSides = true;
+		CanAttackBottom = true;
+
 		setObjects();
 	}
 
@@ -71,16 +67,35 @@ public class Attack : MonoBehaviour {
 		wRight = target.GetChild(3);
 	}
 
-	/// <summary>
-	/// Attack Cooldown. 
-	/// </summary>
-	/// <returns>The cooldown.</returns>
-	/// 
-	/// TODO: Add individual cooldown functions. 
-	private IEnumerator AttackCooldown() {
-		CanAttack = false;
-		yield return new WaitForSeconds(Cooldown);
-		CanAttack = true;
+	private void setAbilities() {
+		switch(shipType) {
+		case ShipTypes.typeOne:
+			break;
+		case ShipTypes.typeTwo:
+			break;
+		case ShipTypes.typeThree:
+			break;
+		}
+	}
+
+	private IEnumerator AttackCooldownTop() {
+		Debug.Log("Cooldown top attack");
+		CanAttackTop = false;
+		yield return new WaitForSeconds(Globals.TOP_COOLDOWN);
+		CanAttackTop = true;
+	}
+
+	private IEnumerator AttackCooldownSides() {
+		Debug.Log("Cooldown side attack");
+		CanAttackSides = false;
+		yield return new WaitForSeconds(Globals.SIDES_COOLDOWN);
+		CanAttackSides = true;
+	}
+	private IEnumerator AttackCooldownBottom() {
+		Debug.Log("Cooldown bottom attack");
+		CanAttackBottom = false;
+		yield return new WaitForSeconds(Globals.BOTTOM_COOLDOWN);
+		CanAttackBottom = true;
 	}
 
 	/// <summary>
@@ -88,25 +103,32 @@ public class Attack : MonoBehaviour {
 	/// </summary>
 	/// 
 	/// TODO: Comment this SOB
-	private IEnumerator Fire(){
+	private IEnumerator Fire(int direction){
 		Debug.Log("Charging...");
 		GameObject newIndicatorTop = null;
 		GameObject newIndicatorLeft = null;
 		GameObject newIndicatorRight = null;
 		GameObject newIndicatorBottom = null;
+
+		float waitTime = 1.0f;
+
 		switch(direction) {
 		case 0:
-			newIndicatorTop = (GameObject) Instantiate(warningPrefab, wTop.position, Quaternion.identity);
+			newIndicatorTop = (GameObject) Instantiate(warningPrefab, wTop.position, wTop.rotation);
+			waitTime = Globals.TOP_COOLDOWN/2;
 			break;
 		case 1:
-			newIndicatorLeft = (GameObject) Instantiate(warningPrefab, wLeft.position, Quaternion.identity);
-			newIndicatorRight = (GameObject) Instantiate(warningPrefab, wRight.position, Quaternion.identity);
+			newIndicatorLeft = (GameObject) Instantiate(warningPrefab, wLeft.position, wLeft.rotation);
+			newIndicatorRight = (GameObject) Instantiate(warningPrefab, wRight.position, wRight.rotation);
+			waitTime = Globals.SIDES_COOLDOWN/2;
 			break;
 		case 2:
-			newIndicatorBottom = (GameObject) Instantiate(warningPrefab, wBottom.position, Quaternion.identity);
+			newIndicatorBottom = (GameObject) Instantiate(warningPrefab, wBottom.position, wBottom.rotation);
+			waitTime = Globals.BOTTOM_COOLDOWN/2;
 			break;
 		}
-		yield return new WaitForSeconds(WaitTime);
+
+		yield return new WaitForSeconds(waitTime);
 
 		switch(direction) {
 		case 0:
@@ -124,54 +146,64 @@ public class Attack : MonoBehaviour {
 		switch(direction) {
 		case 0:
 			GameObject newProjectileTop = (GameObject) Instantiate(prefabTop, top.position, Quaternion.identity);
+
 			newProjectileTop.GetComponent<Projectile>().TargetList.Add(target);
 			newProjectileTop.GetComponent<Projectile>().Damage = 1;
+
+			StartCoroutine(AttackCooldownTop());
+
 			break;
 		case 1:
 			GameObject newProjectileLeft = (GameObject) Instantiate(prefabSide, left.position, Quaternion.identity);
 			GameObject newProjectileRight = (GameObject) Instantiate(prefabSide, right.position, Quaternion.identity);
+
 			newProjectileLeft.GetComponent<Projectile>().TargetList.Add(target.parent.GetChild(1).GetChild(3));
 			newProjectileRight.GetComponent<Projectile>().TargetList.Add(target.parent.GetChild(1).GetChild(2));
+
 			newProjectileLeft.GetComponent<Projectile>().TargetList.Add(target);
 			newProjectileRight.GetComponent<Projectile>().TargetList.Add(target);
+
 			newProjectileLeft.GetComponent<Projectile>().Damage = 3;
 			newProjectileRight.GetComponent<Projectile>().Damage = 3;
+
+			StartCoroutine(AttackCooldownSides());
+
 			break;
 		case 2:
 			GameObject newProjectileBottom = (GameObject) Instantiate(prefabBottom, bottom.position, Quaternion.identity);
+
 			newProjectileBottom.GetComponent<Projectile>().TargetList.Add(target);
+
 			newProjectileBottom.GetComponent<Projectile>().Damage = 2;
+
+			StartCoroutine(AttackCooldownBottom());
+
 			break;
 		}
 		Debug.Log("Fired!");
-		StartCoroutine(AttackCooldown());
 	}
 
 	public void Top() {
-		direction = 0;
-		if(CanAttack) {
-			Cooldown = 1.5f;
-			StartCoroutine(Fire());
+		if(CanAttackTop) {
+			StartCoroutine(Fire(0));
 		} else Debug.Log("Cannot attack at this time");
 	}
 
 	public void Sides() {
-		direction = 1;
-		if(CanAttack) {
-			Cooldown = 6.0f;
-			StartCoroutine(Fire());
+		if(CanAttackSides) {
+			StartCoroutine(Fire(1));
 		} else Debug.Log("Cannot attack at this time");
 	}
 
 	public void Bottom() {
-		direction = 2;
-		if(CanAttack) {
-			Cooldown = 3.0f;
-			StartCoroutine(Fire());
+		if(CanAttackBottom) {
+			StartCoroutine(Fire(2));
 		} else Debug.Log("Cannot attack at this time");
 	}
 
 	public void Reset() {
-		CanAttack = true;
+		CanAttackTop = true;
+		CanAttackSides = true;
+		CanAttackBottom = true;
 	}
 }
