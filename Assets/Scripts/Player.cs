@@ -8,6 +8,8 @@ using System.Collections;
 /// TODO: Comment!
 public class Player : MonoBehaviour {
 
+	public Sprite shipSprite { get; set; }
+
 	private static int BASE_HITPOINTS = 10;
 
 	private int HitPoints { get; set; }
@@ -24,11 +26,7 @@ public class Player : MonoBehaviour {
 		HitPoints = BASE_HITPOINTS;
 	}
 
-	public void TakeDamage() {
-		HitPoints--;
-		Debug.Log("Player was hit for one");
-		CheckHealth();
-	}
+
 
 	public void TakeDamage(int a) {
 		HitPoints -= a;

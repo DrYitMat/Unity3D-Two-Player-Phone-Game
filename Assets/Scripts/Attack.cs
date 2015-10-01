@@ -20,7 +20,7 @@ public class Attack : MonoBehaviour {
 	/// <summary>
 	/// Projectile prefabs. These need to have the Projectile script attached to them. 
 	/// </summary>
-	private GameObject prefabTop,prefabBottom,prefabSide;
+	public GameObject prefabTop,prefabBottom,prefabSide;
 
 	private Transform wTop,wBottom,wLeft,wRight;
 
@@ -135,7 +135,7 @@ public class Attack : MonoBehaviour {
 			GameObject newProjectileTop = (GameObject) Instantiate(prefabTop, top.position, Quaternion.identity);
 
 			newProjectileTop.GetComponent<Projectile>().TargetList.Add(target);
-			newProjectileTop.GetComponent<Projectile>().Damage = 1;
+			newProjectileTop.GetComponent<Projectile>().damage = 1;
 
 			StartCoroutine(AttackCooldownTop());
 
@@ -150,8 +150,8 @@ public class Attack : MonoBehaviour {
 			newProjectileLeft.GetComponent<Projectile>().TargetList.Add(target);
 			newProjectileRight.GetComponent<Projectile>().TargetList.Add(target);
 
-			newProjectileLeft.GetComponent<Projectile>().Damage = 3;
-			newProjectileRight.GetComponent<Projectile>().Damage = 3;
+			newProjectileLeft.GetComponent<Projectile>().damage = 3;
+			newProjectileRight.GetComponent<Projectile>().damage = 3;
 
 			StartCoroutine(AttackCooldownSides());
 
@@ -161,7 +161,7 @@ public class Attack : MonoBehaviour {
 
 			newProjectileBottom.GetComponent<Projectile>().TargetList.Add(target);
 
-			newProjectileBottom.GetComponent<Projectile>().Damage = 2;
+			newProjectileBottom.GetComponent<Projectile>().damage = 2;
 
 			StartCoroutine(AttackCooldownBottom());
 

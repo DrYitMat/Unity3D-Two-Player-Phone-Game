@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour {
 	private float step = 0.0f;
 	public float Speed { get; set; }
 
-	public int Damage { get; set; }
+	public int damage = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour {
 		}
 		if(coll.gameObject.tag == currentTarget.parent.gameObject.tag) {
 			Debug.Log(coll.gameObject.tag);
-			coll.gameObject.SendMessage("TakeDamage", Damage);
+			coll.gameObject.SendMessage("TakeDamage", damage);
 			Destroy(this.gameObject);
 		}
 	}
