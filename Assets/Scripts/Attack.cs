@@ -53,9 +53,7 @@ public class Attack : MonoBehaviour {
 		left = spawnBase.GetChild(2);
 		right = spawnBase.GetChild(3);
 
-		prefabTop = (GameObject) Resources.Load("programmerprojectile");
-		prefabBottom = (GameObject) Resources.Load("programmerprojectile");
-		prefabSide = (GameObject) Resources.Load("programmerprojectile");
+		loadProjectilePrefabs ();
 
 		warningPrefab = (GameObject) Resources.Load("WarningIndicater");
 
@@ -63,6 +61,25 @@ public class Attack : MonoBehaviour {
 		wBottom = target.GetChild(1);
 		wLeft = target.GetChild(2);
 		wRight = target.GetChild(3);
+	}
+
+	/// <summary>
+	/// Loads the projectile prefabs. Sets to default projectile if not declared in Player script. 
+	/// </summary>
+	/// 
+	/// NOTE: No need to check for if this game object has a player prefab attached. The game won't work if there is not. IDK How you would FK up that bad. 
+	private void loadProjectilePrefabs() {
+		if(gameObject.GetComponent<Player> ().projecitlePrefabTop != null)
+			prefabTop = gameObject.GetComponent<Player> ().projecitlePrefabTop;
+		else prefabTop = (GameObject) Resources.Load("programmerprojectile");
+
+		if(gameObject.GetComponent<Player> ().projecitlePrefabSide != null)
+			prefabSide = gameObject.GetComponent<Player> ().projecitlePrefabSide;
+		else prefabSide = (GameObject) Resources.Load("programmerprojectile");
+	
+		if(gameObject.GetComponent<Player> ().projecitlePrefabBottom != null)
+			prefabBottom = gameObject.GetComponent<Player> ().projecitlePrefabBottom;
+		else prefabBottom = (GameObject) Resources.Load("programmerprojectile");
 	}
 
 	private IEnumerator AttackCooldownTop() {
@@ -135,7 +152,6 @@ public class Attack : MonoBehaviour {
 			GameObject newProjectileTop = (GameObject) Instantiate(prefabTop, top.position, Quaternion.identity);
 
 			newProjectileTop.GetComponent<Projectile>().TargetList.Add(target);
-			newProjectileTop.GetComponent<Projectile>().damage = 1;
 
 			StartCoroutine(AttackCooldownTop());
 
@@ -150,9 +166,6 @@ public class Attack : MonoBehaviour {
 			newProjectileLeft.GetComponent<Projectile>().TargetList.Add(target);
 			newProjectileRight.GetComponent<Projectile>().TargetList.Add(target);
 
-			newProjectileLeft.GetComponent<Projectile>().damage = 3;
-			newProjectileRight.GetComponent<Projectile>().damage = 3;
-
 			StartCoroutine(AttackCooldownSides());
 
 			break;
@@ -160,8 +173,6 @@ public class Attack : MonoBehaviour {
 			GameObject newProjectileBottom = (GameObject) Instantiate(prefabBottom, bottom.position, Quaternion.identity);
 
 			newProjectileBottom.GetComponent<Projectile>().TargetList.Add(target);
-
-			newProjectileBottom.GetComponent<Projectile>().damage = 2;
 
 			StartCoroutine(AttackCooldownBottom());
 

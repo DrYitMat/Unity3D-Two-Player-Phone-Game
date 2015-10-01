@@ -53,6 +53,7 @@ public class Projectile : MonoBehaviour {
 		}
 		if(coll.gameObject.tag == currentTarget.parent.gameObject.tag) {
 			Debug.Log(coll.gameObject.tag);
+			coll.gameObject.SendMessage("SetHitBy", gameObject.name);
 			coll.gameObject.SendMessage("TakeDamage", damage);
 			Destroy(this.gameObject);
 		}
