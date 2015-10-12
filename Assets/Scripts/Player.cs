@@ -1,9 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Player.
+/// </summary>
+/// 
+/// TODO: Comment!
 public class Player : MonoBehaviour {
 
-	private static int BASE_HITPOINTS = 5;
+	public Sprite shipSprite;
+
+	public GameObject projecitlePrefabTop, projecitlePrefabSide, projecitlePrefabBottom;
+
+	private string hitBy = "NULL";
+
+	private static int BASE_HITPOINTS = 10;
 
 	private int HitPoints { get; set; }
 
@@ -19,15 +30,13 @@ public class Player : MonoBehaviour {
 		HitPoints = BASE_HITPOINTS;
 	}
 
-	public void TakeDamage() {
-		HitPoints--;
-		Debug.Log("Player was hit for one");
-		CheckHealth();
+	public void SetHitBy(string a) {
+		hitBy = a;
 	}
 
 	public void TakeDamage(int a) {
 		HitPoints -= a;
-		Debug.Log("Player was hit for " + a);
+		Debug.Log("Player was hit for " + a + " by " + hitBy);
 		CheckHealth();
 	}
 

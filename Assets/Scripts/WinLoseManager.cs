@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles the result of the game.
 /// </summary>
-/// 
-/// TODO: Should probably make playAgain find the WinLossManager in code, and add a listener for it being clicked. 
 public class WinLoseManager : MonoBehaviour {
 
 	// Players

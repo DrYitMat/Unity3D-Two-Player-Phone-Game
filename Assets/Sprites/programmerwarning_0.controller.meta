@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< .merge_file_GNpQDl
 guid: 840bdb9e59720422db6ce3ad18eb5cd2
 timeCreated: 1442559210
+=======
+guid: a95b020cf41294dd58ce1a07041d90df
+timeCreated: 1442652681
+>>>>>>> .merge_file_ivoddl
 licenseType: Free
 NativeFormatImporter:
   userData: 

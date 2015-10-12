@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< .merge_file_769ARj
 guid: fb48a1922ca6b4bd498b58926762fe93
 timeCreated: 1442559209
+=======
+guid: f0495f72314764bf2bf47d6ff428fc0d
+timeCreated: 1442652681
+>>>>>>> .merge_file_bbwy1j
 licenseType: Free
 NativeFormatImporter:
   userData: 

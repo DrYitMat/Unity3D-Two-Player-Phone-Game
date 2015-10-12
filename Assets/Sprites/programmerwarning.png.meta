@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< .merge_file_v0wnSd
 guid: 2061cd03658874858acea35a87708d74
 timeCreated: 1442559177
+=======
+guid: 834ef3812060244f39bc84780ad569ef
+timeCreated: 1442652379
+>>>>>>> .merge_file_MAkl2d
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -45,7 +50,11 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+<<<<<<< .merge_file_v0wnSd
   spritePixelsToUnits: 30
+=======
+  spritePixelsToUnits: 20
+>>>>>>> .merge_file_MAkl2d
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
